@@ -79,12 +79,12 @@ class AppClock extends StatelessWidget {
                               TabBar(
                                   indicator: UnderlineTabIndicator(
                                       borderSide: BorderSide(
-                                          color: Color(0xffff0863), width: 4.0),
+                                          color: Colors.black, width: 4.0),
                                       insets: EdgeInsets.fromLTRB(
                                           40.0, 20.0, 40.0, 0)),
                                   indicatorWeight: 15,
                                   indicatorSize: TabBarIndicatorSize.label,
-                                  labelColor: Color(0xff2d386b),
+                                  labelColor: Colors.red,
                                   labelStyle: TextStyle(
                                       fontSize: 12,
                                       letterSpacing: 1.3,
