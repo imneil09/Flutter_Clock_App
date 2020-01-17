@@ -56,7 +56,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] /home/neil/
 	android:label
 		ADDED from /home/neil/AndroidStudioProjects/clock/android/app/src/main/AndroidManifest.xml:10:9-30
 	android:icon
-		ADDED from /home/neil/AndroidStudioProjects/clock/android/app/src/main/AndroidManifest.xml:11:9-43
+		ADDED from /home/neil/AndroidStudioProjects/clock/android/app/src/main/AndroidManifest.xml:11:9-45
 	android:name
 		ADDED from /home/neil/AndroidStudioProjects/clock/android/app/src/main/AndroidManifest.xml:9:9-57
 activity#com.example.clock.MainActivity

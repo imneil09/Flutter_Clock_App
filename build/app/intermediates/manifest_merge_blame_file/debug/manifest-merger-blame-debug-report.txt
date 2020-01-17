@@ -28,8 +28,8 @@
 24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 24-->[androidx.core:core:1.0.0] /home/neil/.gradle/caches/transforms-2/files-2.1/0a271e99b6771ad4a84318244d532fb7/core-1.0.0/AndroidManifest.xml:22:18-86
 25        android:debuggable="true"
-26        android:icon="@mipmap/ic_launcher"
-26-->/home/neil/AndroidStudioProjects/clock/android/app/src/main/AndroidManifest.xml:11:9-43
+26        android:icon="@mipmap/launcher_icon"
+26-->/home/neil/AndroidStudioProjects/clock/android/app/src/main/AndroidManifest.xml:11:9-45
 27        android:label="clock" >
 27-->/home/neil/AndroidStudioProjects/clock/android/app/src/main/AndroidManifest.xml:10:9-30
 28        <activity

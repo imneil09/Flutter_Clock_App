@@ -1,4 +1,4 @@
 enum ClockText{
+  sanskrit,
   roman,
-  arabic
 }
