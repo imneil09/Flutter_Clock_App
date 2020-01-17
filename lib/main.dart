@@ -133,6 +133,7 @@ class BottomBar extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(50, 0, 50, 50),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           RaisedButton(
             elevation: 7,
@@ -159,18 +160,20 @@ class BottomBar extends StatelessWidget {
             ),
             onPressed: () {},
           ),
-          FloatingActionButton(
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.timer),
-                Text('Stop watch')
-              ],
-            ),
+          FloatingActionButton.extended(
             onPressed: () {},
             backgroundColor: Colors.amber,
             foregroundColor: Colors.black,
             elevation: 5,
             highlightElevation: 3,
+            icon: Icon(
+              Icons.timer,
+              size: 15,
+            ),
+            label: Text(
+              'Stop watch',
+              style: TextStyle(letterSpacing: 0.5, fontSize: 12),
+            ),
           )
         ],
       ),
