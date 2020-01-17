@@ -1,6 +1,6 @@
 # clock
 
-A Flutter_Clock project.
+A Flutter_Clock(App) project.
 
 ## Getting Started
 
