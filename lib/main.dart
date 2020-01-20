@@ -1,29 +1,46 @@
+import 'package:bloc/bloc.dart';
+import 'package:clock_app/Timer/data/database.dart';
+import 'package:clock_app/Timer/data/task_manager.dart';
+import 'package:clock_app/Timer/pages/home_page/home_bloc.dart';
+import 'package:clock_app/Timer/pages/home_page/home_page.dart';
+import 'package:clock_app/Timer/pages/new_task_page.dart';
 import 'package:clock_app/screens/clockTab.dart';
 import 'package:clock_app/screens/recordsTab.dart';
-import 'package:clock_app/screens/settingsTab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum _Element {
-  background,
-  text,
-  shadow,
+class MyDelegate extends BlocDelegate {
+  @override
+  void onTransition(Transition transition) {
+    print(transition);
+  }
 }
 
-final _lightTheme = {
-  _Element.background: Color(0xFF81B3FE),
-  _Element.text: Colors.white,
-  _Element.shadow: Colors.black,
-};
+void main() {
+  BlocSupervisor().delegate = MyDelegate();
+  DatabaseProvider dbProvider = DatabaseProvider.db;
+  TaskManager taskManager = TaskManager(dbProvider: dbProvider);
+  HomeBloc homeBloc = HomeBloc(taskManager: taskManager);
+  runApp(MyApp(
+    homeBloc: homeBloc,
+  ));
+}
 
-final _darkTheme = {
-  _Element.background: Colors.black,
-  _Element.text: Colors.white,
-  _Element.shadow: Color(0xFF174EA6),
-};
+class MyApp extends StatefulWidget {
+  final HomeBloc homeBloc;
 
-void main() => runApp(MyApp());
+  const MyApp({Key key, this.homeBloc}) : super(key: key);
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-class MyApp extends StatelessWidget {
+class _MyAppState extends State<MyApp> {
+  @override
+  void dispose() {
+    widget.homeBloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,98 +49,107 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AppClock(),
+      home: ClockApp(
+        homeBloc: widget.homeBloc,
+      ),
+      routes: <String, WidgetBuilder>{
+        '/new': (BuildContext context) => NewTaskPage(),
+      },
     );
   }
 }
 
-class AppClock extends StatelessWidget {
+class ClockApp extends StatefulWidget {
+  final HomeBloc homeBloc;
+
+  const ClockApp({Key key, this.homeBloc}) : super(key: key);
+
+  @override
+  _ClockAppState createState() => _ClockAppState();
+}
+
+class _ClockAppState extends State<ClockApp> {
+  @override
+  void dispose() {
+    widget.homeBloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).brightness == Brightness.light
-        ? _lightTheme
-        : _darkTheme;
-    final fontSize = MediaQuery.of(context).size.width / 3.5;
-    final defaultStyle = TextStyle(
-      color: colors[_Element.text],
-      fontFamily: 'PressStart2P',
-      fontSize: fontSize,
-      shadows: [
-        Shadow(
-          blurRadius: 0,
-          color: colors[_Element.shadow],
-          offset: Offset(10, 0),
-        ),
-      ],
-    );
     return Container(
-        color: colors[_Element.background],
-        height: 600,
-        width: double.infinity,
-        child: DefaultTextStyle(
-          style: defaultStyle,
-          child: DefaultTabController(
-              length: 3,
-              child: Scaffold(
-                  bottomNavigationBar: BottomBar(),
-                  appBar: AppBar(
-                    elevation: 0.0,
-                    backgroundColor: Colors.transparent,
-                    bottom: PreferredSize(
-                      preferredSize: Size.fromHeight(55),
-                      child: Container(
-                        color: Colors.transparent,
-                        child: SafeArea(
-                          child: Column(
-                            children: <Widget>[
-                              TabBar(
-                                  indicator: UnderlineTabIndicator(
-                                      borderSide: BorderSide(
-                                          color: Colors.black, width: 4.0),
-                                      insets: EdgeInsets.fromLTRB(
-                                          40.0, 20.0, 40.0, 0)),
-                                  indicatorWeight: 15,
-                                  indicatorSize: TabBarIndicatorSize.label,
-                                  labelColor: Colors.red,
-                                  labelStyle: TextStyle(
-                                      fontSize: 12,
-                                      letterSpacing: 1.3,
-                                      fontWeight: FontWeight.w500),
-                                  unselectedLabelColor: Colors.black26,
-                                  tabs: [
-                                    Tab(
-                                      text: "CLOCK",
-                                      icon: Icon(Icons.access_time, size: 30),
-                                    ),
-                                    Tab(
-                                      text: "RECORDS",
-                                      icon: Icon(Icons.history, size: 30),
-                                    ),
-                                    Tab(
-                                      text: "SETTINGS",
-                                      icon: Icon(Icons.settings, size: 30),
-                                    ),
-                                  ])
-                            ],
-                          ),
-                        ),
-                      ),
+      height: 600,
+      width: double.infinity,
+      child: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            bottomNavigationBar: BottomBar(),
+            appBar: AppBar(
+              elevation: 0.0,
+              backgroundColor: Colors.transparent,
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(55),
+                child: Container(
+                  color: Colors.transparent,
+                  child: SafeArea(
+                    child: Column(
+                      children: <Widget>[
+                        TabBar(
+                            indicator: UnderlineTabIndicator(
+                                borderSide: BorderSide(
+                                    color: Color(0xffff0863), width: 4.0),
+                                insets:
+                                    EdgeInsets.fromLTRB(40.0, 20.0, 40.0, 0)),
+                            indicatorWeight: 15,
+                            indicatorSize: TabBarIndicatorSize.label,
+                            labelColor: Color(0xff2d386b),
+                            labelStyle: TextStyle(
+                                fontSize: 12,
+                                letterSpacing: 1.3,
+                                fontWeight: FontWeight.w500),
+                            unselectedLabelColor: Color(0xffff5e92),
+                            tabs: [
+                              Tab(
+                                text: "CLOCK",
+                                icon: Icon(Icons.access_time, size: 30),
+                              ),
+                              Tab(
+                                text: "TASK TIMER",
+                                icon: Icon(
+                                  Icons.hourglass_empty,
+                                  size: 30,
+                                ),
+                              ),
+                              Tab(
+                                text: "RECORDS",
+                                icon: Icon(Icons.history, size: 30),
+                              ),
+                            ])
+                      ],
                     ),
                   ),
-                  body: TabBarView(
-                    children: <Widget>[
-                      Center(
-                        child: ClockTab(),
+                ),
+              ),
+            ),
+            body: TabBarView(
+              children: <Widget>[
+                Center(
+                  child: ClockTab(),
+                ),
+                BlocProvider<HomeBloc>(
+                    bloc: widget.homeBloc,
+                    child: Center(
+                      child: HomePage(
+                        homeBloc: widget.homeBloc,
                       ),
-                      Center(
-                        child: RecordsTab(),
-                      ),
-                      Center(
-                        child: SettingsTab(),
-                      )
-                    ],
-                  ))),
-        ));
+                    )),
+                Center(
+                  child: RecordsTab(),
+                )
+              ],
+            ),
+          )),
+    );
   }
 }
 

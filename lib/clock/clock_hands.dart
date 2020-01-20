@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'hand_hour.dart';
 import 'hand_minute.dart';
 import 'hand_second.dart';
@@ -39,32 +37,4 @@ class ClockHands extends StatelessWidget {
   }
 }
 
-//class _ClockHandState extends State<ClockHands> {
-  Timer _timer;
-//
-//  _ClockHandState();
-//
-//  @override
-//  void initState() {
-//    super.initState();
-//    dateTime = new DateTime.now();
-//    _timer = new Timer.periodic(const Duration(seconds: 1), setTime);
-//  }
-//
-//  void setTime(Timer timer) {
-//    setState(() {
-//      dateTime = new DateTime.now();
-//    });
-//  }
-//
-//  @override
-//  void dispose() {
-//    _timer.cancel();
-//    super.dispose();
-//  }
-//
-//  @override
-//  Widget build(BuildContext context) {
-//  }
-//}
 
